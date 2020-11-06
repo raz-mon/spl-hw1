@@ -14,7 +14,7 @@ enum Status{
 
 class Graph{
 public:
-    Graph(vector<vector<int>> matrix);
+    Graph(std::vector<std::vector<int>> matrix);
 
     //Not originally in files
     Graph();
@@ -23,11 +23,13 @@ public:
     bool isInfected(int nodeInd);
 
     // We inserted:
-
     bool finish();
+
     Status getStatus(int node);
+
+    int closestNode(int node);
 private:
-    vector<std::vector<int>> edges;
+    std::vector<std::vector<int>> edges;
     // We inserted:
     vector<Status> nodesStatus;
 };
