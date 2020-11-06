@@ -30,13 +30,15 @@ public:
     int dequeueInfected();
     TreeType getTreeType() const;
 
+    //Almog adds-on: new functions
+    Graph& getGraph();
+
     ~Session(){}
 
 private:
     Graph g;
     TreeType treeType;
     std::vector<Agent*> agents;
-
 
 };
 
