@@ -12,7 +12,7 @@ Graph::Graph():edges(), nodesStatus(){}
 
 Graph::Graph(std::vector<std::vector<int>> matrix): edges(matrix), nodesStatus(){
     for(uint i=0;i<edges.size();++i){
-        nodesStatus.push_back(I);
+        nodesStatus.push_back(H);
     }
 }
 
