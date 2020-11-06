@@ -57,7 +57,11 @@ Session::Session(const std::string& path):g(),treeType(),agents(){
 
 void Session::simulate(){
     while (!g.finish()){
-        //agents.act(); (pseudo)
+        //Indicating vector size
+        int currentSize = agents.size();
+        for(int i = 0; i < currentSize; i++){
+            agents[i]->act();
+        }
     }
 }
 
