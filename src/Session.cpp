@@ -57,10 +57,27 @@ Session::Session(const std::string& path):g(),treeType(),agents(){
 
 void Session::simulate(){
     while (!g.finish()){
-        //agents.act(); (pseudo)
+        //Indicating vector size
+        int currentSize = agents.size();
+        for(int i = 0; i < currentSize; i++){
+            agents[i]->act();
+        }
     }
 }
 
+//Almog - adds-on: new functions
+Graph& Session::getGraph() {
+    Graph& temp = g;
+    return temp;
+}
 
+/*
+ * enqueueInfected
+ */
+void Session::enqueueInfected(int node){}
 
+/*
+ * addAgent
+ */
+void Session::addAgent(const Agent& agent){}
 

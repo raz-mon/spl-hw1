@@ -11,7 +11,7 @@ using namespace std;
 Graph::Graph():edges(), nodesStatus(){}
 
 Graph::Graph(std::vector<std::vector<int>> matrix): edges(matrix), nodesStatus(){
-    for(uint i=0;i<edges.size();++i){
+    for(uint i = 0;i < edges.size(); ++i){
         nodesStatus.push_back(H);
     }
 }
@@ -22,7 +22,7 @@ Status Graph::getStatus(int node){
     return nodesStatus[node];
 }
 
-
+// Build connectivity components and check for solidarity among them.
 bool Graph::finish(){
 
 /*
@@ -43,10 +43,10 @@ bool Graph::finish(){
 
 //          This is the actual function I want to KEEP! The rest are tests.
     bool ans = true;
-    for(uint i=0;i<edges.size();++i){
+    for(uint i = 0;i < edges.size(); ++i){
         Status currNodeStatus = nodesStatus[i];
-        for(uint j=0;(j<edges.size()) & (ans);++j){
-            if ((i!=j) & (edges[i][j]==1) & (currNodeStatus!=nodesStatus[j])){
+        for(uint j = 0;(j < edges.size()) & (ans); ++j){
+            if ((i != j) & (edges[i][j] == 1) & (currNodeStatus!=nodesStatus[j])){
                 ans = false;
                 cout << "nodes " << i << " and " << j << " are of different states!" << endl;
             }
@@ -62,7 +62,25 @@ bool Graph::finish(){
 */
 }
 
+//Almog adds-on: new functions
 
+/*
+ * closestNode searching for the closest node to be infected by the virus
+ */
+int Graph::closestNode(int node){
+    for(uint i = node + 1; i < nodesStatus.size(); i++){
+        if(nodesStatus[i] == H)
+            return (int)i;
+    }
+    return -1;
+}
 
+/*
+ * infectNode and isInfected
+ */
 
+void Graph::infectNode(int nodeInd) {}
 
+bool Graph::isInfected(int nodeInd) {
+    return true;
+}
