@@ -22,6 +22,10 @@ Status Graph::getStatus(int node){
     return nodesStatus[node];
 }
 
+void Graph::setStatus(int node, Status sts) {
+    this->nodesStatus[node] = sts;
+}
+
 // Build connectivity components and check for solidarity among them.
 bool Graph::finish(){
 
@@ -43,10 +47,10 @@ bool Graph::finish(){
 
 //          This is the actual function I want to KEEP! The rest are tests.
     bool ans = true;
-    for(uint i = 0;i < edges.size(); ++i){
+    for(uint i = 0; i < edges.size(); ++i){
         Status currNodeStatus = nodesStatus[i];
         for(uint j = 0;(j < edges.size()) & (ans); ++j){
-            if ((i != j) & (edges[i][j] == 1) & (currNodeStatus!=nodesStatus[j])){
+            if ((i != j) & (edges[i][j] == 1) & (currNodeStatus != nodesStatus[j])){
                 ans = false;
                 cout << "nodes " << i << " and " << j << " are of different states!" << endl;
             }
@@ -69,8 +73,10 @@ bool Graph::finish(){
  */
 int Graph::closestNode(int node){
     for(uint i = node + 1; i < nodesStatus.size(); i++){
-        if(nodesStatus[i] == H)
-            return (int)i;
+        if(edges[node][i] == 1){
+            if(nodesStatus[i] == H)
+                return (int)i;
+        }
     }
     return -1;
 }
@@ -79,8 +85,11 @@ int Graph::closestNode(int node){
  * infectNode and isInfected
  */
 
-void Graph::infectNode(int nodeInd) {}
+
+void Graph::infectNode(int nodeInd){
+    this->nodesStatus[nodeInd] = I;
+}
 
 bool Graph::isInfected(int nodeInd) {
-    return true;
+    return nodesStatus[nodeInd] == I;
 }
