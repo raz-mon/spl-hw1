@@ -13,16 +13,25 @@ using namespace std;
 
 Agent::Agent(Session& session): session(session){}
 
+Agent::~Agent(){}
+
+
+
+
 ContactTracer::ContactTracer(Session& session):Agent(session) {}
+
+ContactTracer* ContactTracer::clone() const{
+    return new ContactTracer(*this);
+}
 
 void ContactTracer::act(){
     int dequeue = session.dequeueInfected();
     session.Trace(dequeue);
 }
 
-ContactTracer* ContactTracer::clone() const{
-    return new ContactTracer(*this);
-}
+
+
+
 
 
 Virus::Virus(int nodeInd, Session& session):Agent(session), nodeInd(nodeInd){}

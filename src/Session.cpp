@@ -56,6 +56,29 @@ Session::Session(const std::string& path):g(),treeType(),agents(),InfectedQueue(
     }
 }
 
+Session::Session(const Session &otherSess): g(otherSess.g),
+        treeType(otherSess.treeType), agents(), InfectedQueue(otherSess.InfectedQueue){
+    for (uint i=0; i<agents.size(); ++i){
+        this->agents[i] = otherSess.agents[i]->clone();           // Atention!!!! We have new memory to take care of.
+    }
+}
+
+Session & Session::operator=(const Session &otherSess){          // Atention!!!! We have new memory to take care of.
+    this->g = otherSess.g;
+    this->treeType = otherSess.treeType;
+    this->InfectedQueue = otherSess.InfectedQueue;
+    for (uint i=0; i<agents.size(); ++i){
+        this->agents[i] = otherSess.agents[i]->clone();
+    }
+    return *this;
+}
+
+Session::~Session(){
+    for (uint i=0; i<agents.size(); ++i){
+        delete(agents[i]);
+    }
+}
+
 void Session::simulate(){
     while (!g.finish()){
         //Indicating vector size
@@ -64,6 +87,10 @@ void Session::simulate(){
             agents[i]->act();
         }
     }
+}
+
+TreeType Session::getTreeType() const{
+    return this->treeType;
 }
 
 //Almog - adds-on: new functions
