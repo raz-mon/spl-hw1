@@ -26,6 +26,7 @@ public:
     bool finish();
 
     Status getStatus(int node);
+    void setStatus(int node, Status sts);
 
     int closestNode(int node);
 private:

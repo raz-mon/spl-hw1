@@ -11,9 +11,17 @@ class Agent{
 public:
     Agent(Session& session);
 
+    //Copy constructor
+
+    //Copy Assignment operator
+
+    //Destructor
+    virtual ~Agent();
+
     virtual void act()=0;
 
-    virtual ~Agent(){}
+    virtual Agent* clone() const=0 ;
+
 protected:
     Session& session;
 };
@@ -23,6 +31,7 @@ public:
     ContactTracer(Session& session);
     
     virtual void act();
+    virtual ContactTracer* clone() const;
 
     virtual ~ContactTracer(){}
 
@@ -34,6 +43,7 @@ public:
     Virus(int nodeInd, Session& session);
     
     virtual void act();
+    virtual Virus* clone() const;
 
     virtual ~Virus(){}
 
