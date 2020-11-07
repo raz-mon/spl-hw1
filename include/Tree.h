@@ -13,6 +13,10 @@ public:
     Tree(int rootLabel);
     void addChild(const Tree& child);
 
+    //Rule of 3:
+    virtual ~Tree();
+    Tree(const Tree &other);
+    Tree & operator=(const Tree &other);
 
     static Tree* createTree(const Session& session, int rootLabel);
     virtual int traceTree()=0;
@@ -31,7 +35,7 @@ public:
     CycleTree(int rootLabel, int currCycle);            // currCycle: probably a field we will need to maintain.
     virtual int traceTree();
 
-    virtual Tree* clone() const;
+    virtual CycleTree* clone() const;
 private:
     int currCycle;
 };
@@ -41,7 +45,7 @@ public:
     MaxRankTree(int rootLabel);
     virtual int traceTree();
 
-    virtual Tree* clone() const;
+    virtual MaxRankTree* clone() const;
 };
 
 class RootTree: public Tree{
@@ -49,7 +53,7 @@ public:
     RootTree(int rootLabel);
     virtual int traceTree();
 
-    virtual Tree* clone() const;
+    virtual RootTree* clone() const;
 };
 
 #endif
