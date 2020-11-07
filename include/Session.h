@@ -27,15 +27,21 @@ public:
     void setGraph(const Graph& graph);
     //Trace function for ContactTracer - act()
     void Trace(int infectedNode);
+    //Rule of 3:
+    virtual ~Session();
+    Session(const Session &otherSess);
+    Session & operator=(const Session &otherSess);
+
 
     void enqueueInfected(int);
     int dequeueInfected();
     TreeType getTreeType() const;
 
+
     //Almog adds-on: new functions
     Graph& getGraph();
 
-    ~Session(){}
+
 
 private:
     Graph g;
