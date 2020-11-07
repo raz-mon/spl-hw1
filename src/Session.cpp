@@ -8,14 +8,15 @@
 #include <iostream>
 #include "../include/Agent.h"
 #include <string>
+#include <vector>
 
 
 using json = nlohmann::json;
 using namespace std;
 
-Session::Session():g(),treeType(Root), agents(){}
+Session::Session():g(),treeType(Root), agents(),InfectedQueue(){}
 
-Session::Session(const std::string& path):g(),treeType(),agents(){
+Session::Session(const std::string& path):g(),treeType(),agents(),InfectedQueue(){
     ifstream i(path);
     json j;
     i >> j;
@@ -74,10 +75,25 @@ Graph& Session::getGraph() {
 /*
  * enqueueInfected
  */
-void Session::enqueueInfected(int node){}
+void Session::enqueueInfected(int node){
+    this->InfectedQueue.push_back(node);
+}
+
+int Session::dequeueInfected(){
+    if(InfectedQueue.empty())       //Queue is empty
+        return -1;
+    int infectedNode = InfectedQueue.front();            //Save the first element
+    InfectedQueue.erase(InfectedQueue.cbegin()); //Erase the first element
+    return infectedNode;
+}
 
 /*
- * addAgent
+ * addAgent             //We need to check this shit
  */
-void Session::addAgent(const Agent& agent){}
+void Session::addAgent(const Agent& agent){
+    agents.push_back(agent.clone());
+}
+
+//Trace function for ContactTracer - act()
+void Session::Trace(int infectedNode){}
 

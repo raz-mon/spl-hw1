@@ -7,19 +7,29 @@
 #include <iostream>
 #include <string>
 #include "../include/Graph.h"
+//#include "../include/Tree.h"
 
 using namespace std;
 
 Agent::Agent(Session& session): session(session){}
 
-
 ContactTracer::ContactTracer(Session& session):Agent(session) {}
 
-void ContactTracer::act(){}
+void ContactTracer::act(){
+    int dequeue = session.dequeueInfected();
+    session.Trace(dequeue);
+}
+
+ContactTracer* ContactTracer::clone() const{
+    return new ContactTracer(*this);
+}
 
 
 Virus::Virus(int nodeInd, Session& session):Agent(session), nodeInd(nodeInd){}
 
+Virus* Virus::clone() const{
+    return new Virus(*this);
+}
 
 void Virus::act(){
     Graph& g = session.getGraph();
@@ -30,7 +40,10 @@ void Virus::act(){
     int spreaded = g.closestNode(nodeInd);
     if(spreaded != -1){
         Virus *v = new Virus(spreaded, session);
+        g.setStatus(spreaded, C);
         session.addAgent(*v);
     }
 
 }
+
+
