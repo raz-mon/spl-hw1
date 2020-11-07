@@ -31,7 +31,7 @@ Notes from dolav's office hours:
    11. Only one treetype in the session! (maxRank, cycle or Root).
    12. Inside "addchild" we can use clone to the child and delete the child we got (so we won't have duplicants). Or another option he gave that looks better (min 1:001).
    13. Isn't the BFS algorithm the same for every tree? It depends only on starting node, no?
-   14. Minute 1:22 - dolav shows Session copy constructor. And then "lcone" for Agent! Great.
-   15. We can make a "addChild" fun that overrides dolav's methood that sends a poibter (not a reference). In this case we still need to implement his I think.
+   14. Minute 1:22 - dolav shows Session copy constructor. And then "clone" for Agent! Great.
+   15. We can make a "addChild" func that overrides dolav's methood that sends a poibter (not a reference). In this case we still need to implement his I think.
    16. 
       
