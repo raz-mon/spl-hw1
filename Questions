@@ -1,1 +1,5 @@
-1. Do we need to wrute a loop of simulate() (i.e run simulate over and over untill termination condition is satisfied), or run a loop inside simulate (as we did)?
+1. Do we need to wrute a loop of simulate() (i.e run simulate over and over untill
+   termination condition is satisfied), or run a loop inside simulate (as we did)?
+   
+2. addAgent method: how do we add an const agent refferance into agents without 
+   creating a new agent instead.
