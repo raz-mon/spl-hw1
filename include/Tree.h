@@ -12,7 +12,6 @@ class Tree{
 public:
     Tree(int rootLabel);
     void addChild(const Tree& child);
-
     //Rule of 3:
     virtual ~Tree();
     Tree(const Tree &other);
@@ -20,10 +19,11 @@ public:
 
     static Tree* createTree(const Session& session, int rootLabel);
     virtual int traceTree()=0;
-    virtual Tree* clone() const=0;
-    //from here, our implementation:
-    void organize();
 
+    //from here, our implementation:
+    virtual Tree* clone() const=0;
+    void organize();
+    void BFS(int RootInd, Session session);
 
 private:
     int node;
