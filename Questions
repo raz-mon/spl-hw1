@@ -25,6 +25,9 @@ Notes from dolav's office hours:
    7. clone will recieve: "return new contactTracer(*this) in class ContactTracer for example.
    8. The "clone" function implementation (as pure virtual) is SMART because in this way it is activated from the RELEVANT class
       when invoked! awesome.
-   9. Work with trees: every "node" is a Tree. has a label (node index) and a vector of trees (pointers to trees) that are his children. And so on..
-   10. 
+   9.  Work with trees: every "node" is a Tree. has a label (node index) and a vector of trees (pointers to trees) that are his children. And so on..
+   10. Dolav shows at 54:00 how to implement the addition of agents so they wont affect the graph at the cycle of which they where created.
+   11. Only one treetype in the session! (maxRank, cycle or Root).
+   12. Inside "addchild" we can use clone to the child and delete the child we got (so we won't have duplicants). Or another option he gave that looks better (min 1:001).
+   13. 
       
