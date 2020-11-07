@@ -5,4 +5,5 @@
    creating a new agent instead.
 3. What does dolav mean in the Tree description by saying: "Tree – This class used to represent a shortest path tree in the graph, from some starting node"?
 4. In finish() method, do I need to make sure there are no "carrying" verices? i.e all are Healthy or Infected.
-5. 
+5. We have three options (enum) for the nodes status's. Is this o.k? Should we have only 2? (Meaning will the tests be o.k with this).
+6. 
