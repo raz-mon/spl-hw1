@@ -6,4 +6,25 @@
 3. What does dolav mean in the Tree description by saying: "Tree – This class used to represent a shortest path tree in the graph, from some starting node"?
 4. In finish() method, do I need to make sure there are no "carrying" verices? i.e all are Healthy or Infected.
 5. We have three options (enum) for the nodes status's. Is this o.k? Should we have only 2? (Meaning will the tests be o.k with this).
-6. 
+
+
+
+
+
+Notes from dolav's office hours:
+   1. We will need to add method clone to Agents class (and it will be a pure virtual one).
+   2. Change session to protected in Agent and Tree.
+   3. Implement the given methods according to their name!
+   4. Static constructor in Tree. Reason: We build the BFS tree according to the wanted treeTypr (root,cycle,maxRank). So instead of writing if-else's in
+      the BFS method, we will write them in the static fubction and then write in BFS only in "createTree".
+      Why is this good: Very much more efficient code whise. Every change will yield less changes to the rest of the code.
+   5. Clone: instead of using run-time identification (wheather the Agent is Virus type or CT type), we write a pure virtual method 
+      "clone" in Agent, and implement it in CT and Virus. And then in compilation time we identify wheather we deal with Virus's or CT.
+   6. use "clone" for "AddAgent" and then push to the agents vector a new agent (clone return an Agent that sits on the heap).
+      This is due to the fact that we don't know if the agent we got is under our responsibility to erase or not. So we make one on the heap, and erase by ouselfes.
+   7. clone will recieve: "return new contactTracer(*this) in class ContactTracer for example.
+   8. The "clone" function implementation (as pure virtual) is SMART because in this way it is activated from the RELEVANT class
+      when invoked! awesome.
+   9. Work with trees: every "node" is a Tree. has a label (node index) and a vector of trees (pointers to trees) that are his children. And so on..
+   10. 
+      
