@@ -3,3 +3,5 @@
    
 2. addAgent method: how do we add an const agent refferance into agents without 
    creating a new agent instead.
+3. What does dolav mean in the Tree description by saying: "Tree – This class used to represent a shortest path tree in the graph, from some starting node"?
+4. 
