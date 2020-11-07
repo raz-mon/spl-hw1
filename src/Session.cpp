@@ -14,9 +14,9 @@
 using json = nlohmann::json;
 using namespace std;
 
-Session::Session():g(),treeType(Root), agents(),InfectedQueue(){}
+Session::Session():g(),treeType(Root), agents(),InfectedQueue(),cycle(){}
 
-Session::Session(const std::string& path):g(),treeType(),agents(),InfectedQueue(){
+Session::Session(const std::string& path):g(),treeType(),agents(),InfectedQueue(),cycle(0){
     ifstream i(path);
     json j;
     i >> j;
@@ -57,9 +57,9 @@ Session::Session(const std::string& path):g(),treeType(),agents(),InfectedQueue(
 }
 
 Session::Session(const Session &otherSess): g(otherSess.g),
-        treeType(otherSess.treeType), agents(), InfectedQueue(otherSess.InfectedQueue){
+        treeType(otherSess.treeType), agents(), InfectedQueue(otherSess.InfectedQueue),cycle(0){
     for (uint i=0; i<agents.size(); ++i){
-        this->agents[i] = otherSess.agents[i]->clone();           // Atention!!!! We have new memory to take care of.
+        this->agents.push_back(otherSess.agents[i]->clone());           // Atention!!!! We have new memory to take care of.
     }
 }
 
@@ -67,8 +67,13 @@ Session & Session::operator=(const Session &otherSess){          // Atention!!!!
     this->g = otherSess.g;
     this->treeType = otherSess.treeType;
     this->InfectedQueue = otherSess.InfectedQueue;
-    for (uint i=0; i<agents.size(); ++i){
-        this->agents[i] = otherSess.agents[i]->clone();
+    this->cycle = otherSess.cycle;
+    while (agents.size()!=0){
+        delete(agents[0]);
+        agents.erase(agents.begin());
+    }
+    for (uint i=0; i<otherSess.agents.size(); ++i){
+        this->agents.push_back(otherSess.agents[i]->clone());
     }
     return *this;
 }
@@ -86,6 +91,7 @@ void Session::simulate(){
         for(int i = 0; i < currentSize; i++){
             agents[i]->act();
         }
+        ++cycle;
     }
 }
 
@@ -121,6 +127,9 @@ void Session::addAgent(const Agent& agent){
     agents.push_back(agent.clone());
 }
 
-//Trace function for ContactTracer - act()
-void Session::Trace(int infectedNode){}
+int Session::getCycle() const{
+    return this->cycle;
+}
+
+
 

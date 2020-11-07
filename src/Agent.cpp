@@ -25,8 +25,7 @@ ContactTracer* ContactTracer::clone() const{
 }
 
 void ContactTracer::act(){
-    int dequeue = session.dequeueInfected();
-    session.Trace(dequeue);
+//    int dequeue = session.dequeueInfected();
 }
 
 

@@ -7,6 +7,7 @@
 #include "../include/Agent.h"
 #include "../include/Graph.h"
 #include <vector>
+#include "../include/Session.h"
 
 using namespace std;
 
@@ -40,8 +41,10 @@ Tree & Tree::operator=(const Tree &other){          // Atention!!!! We have new 
     return *this;
 }
 
+
+
 void Tree::addChild(const Tree& child){
-    Tree *newChild = child.clone();     //In clone we declare "new" Tree on the Heap, and Delete the prior (child). (Maybe).
+    Tree *newChild = child.clone();     //In clone we declare "new" Tree on the Heap, and Delete the prior (child). This will take place in BFS!
     children.push_back(newChild);
     this->organize();
 }
@@ -49,7 +52,7 @@ void Tree::addChild(const Tree& child){
 Tree* Tree::createTree(const Session& session, int rootLabel) {
     TreeType tt = session.getTreeType();
     if (tt == Cycle) {
-        CycleTree *CT = new CycleTree(rootLabel, currCycle);        //Need to make cuurCycle field in Session.
+        CycleTree *CT = new CycleTree(rootLabel, session.getCycle());        //Need to make currCycle field in Session.
         return CT;
     } else if (tt == MaxRank) {
         MaxRankTree *MRT = new MaxRankTree(rootLabel);
@@ -71,6 +74,11 @@ void Tree::organize(){
         children[i+1] = Temp;
         --i;
     }
+}
+
+void Tree::BFS(int RootInd, Session session){
+//    Tree root(RootInd);
+
 }
 
 
@@ -105,8 +113,6 @@ CycleTree* CycleTree::clone() const {
     CycleTree *CT = new CycleTree(*this);
     return CT;
 }
-
-
 
 
 

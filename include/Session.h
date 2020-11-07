@@ -26,7 +26,6 @@ public:
     void addAgent(const Agent& agent);
     void setGraph(const Graph& graph);
     //Trace function for ContactTracer - act()
-    void Trace(int infectedNode);
     //Rule of 3:
     virtual ~Session();
     Session(const Session &otherSess);
@@ -40,7 +39,7 @@ public:
 
     //Almog adds-on: new functions
     Graph& getGraph();
-
+    int getCycle() const;
 
 
 private:
@@ -48,6 +47,7 @@ private:
     TreeType treeType;
     std::vector<Agent*> agents;
     vector<int> InfectedQueue;
+    int cycle;
 };
 
 #endif
