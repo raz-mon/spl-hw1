@@ -9,7 +9,7 @@
 #include "../include/Agent.h"
 #include <string>
 #include <vector>
-
+#include "../include/Tree.h"    //We need to delete this
 
 using json = nlohmann::json;
 using namespace std;
@@ -85,6 +85,9 @@ Session::~Session(){
 }
 
 void Session::simulate(){
+    Tree* check = Tree::createTree(*this, 0);
+    check->print(*this , 0);
+    /*
     while (!g.finish()){
         //Indicating vector size
         int currentSize = agents.size();
@@ -93,6 +96,7 @@ void Session::simulate(){
         }
         ++cycle;
     }
+     */
 }
 
 TreeType Session::getTreeType() const{
@@ -100,7 +104,7 @@ TreeType Session::getTreeType() const{
 }
 
 //Almog - adds-on: new functions
-Graph& Session::getGraph() {
+Graph& Session::getGraph(){
     Graph& temp = g;
     return temp;
 }
