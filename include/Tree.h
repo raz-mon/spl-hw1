@@ -23,7 +23,13 @@ public:
     //from here, our implementation:
     virtual Tree* clone() const=0;
     void organize();
-    void BFS(int RootInd, Session session);
+    Tree& BFS(int RootInd,Session& session);
+
+    vector<int>* getNeighbors(int Node,Session& session);
+
+
+    //This method should be arased.
+    void print(Session& session, int rootind);
 
 private:
     int node;

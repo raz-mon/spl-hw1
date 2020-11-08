@@ -29,6 +29,9 @@ public:
     void setStatus(int node, Status sts);
 
     int closestNode(int node);
+    bool hasEdge(int i, int j);
+
+    int getSize();
 private:
     std::vector<std::vector<int>> edges;
     // We inserted:

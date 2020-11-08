@@ -93,3 +93,11 @@ void Graph::infectNode(int nodeInd){
 bool Graph::isInfected(int nodeInd) {
     return nodesStatus[nodeInd] == I;
 }
+
+int Graph::getSize(){
+    return edges.size();
+}
+
+bool Graph::hasEdge(int i, int j){
+    return edges[i][j]==1;
+}
