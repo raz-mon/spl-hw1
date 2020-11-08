@@ -9,6 +9,7 @@
 #include <vector>
 #include <iostream>
 #include "../include/Session.h"
+#include <queue>
 
 using namespace std;
 
@@ -17,32 +18,57 @@ Tree::Tree(int rootLabel): node(rootLabel), children(vector<Tree*>()){}
 //Implementation of: Rule of 3
 //Destructor
 Tree::~Tree(){
-    for(uint i=0; i<children.size(); ++i){
-        delete(children[i]);
-    }
+  //  for(uint i = 0; i < children.size(); ++i){
+   //     delete(children[i]);
+   // }
+   clear();
+    cout << "!!!!!!!Destructor!!!!!!!" << endl;
 }
 
 //Copy Constructor
 Tree::Tree(const Tree &other):node(other.node), children(){
-    for(uint i = 0; i < other.children.size(); ++i){
-        this->children.push_back(other.children[i]->clone());           // Attention!!!! We have new memory to take care of.
-    }
+    copyChildren(other);
+    cout << "!!!!!!!Copy Constructor!!!!!!!" << endl;
 }
+
+//Move Constractor
+Tree::Tree(Tree &&other):node(other.node), children(other.children) {}
 
 //Copy Assignment Operator
 Tree & Tree::operator=(const Tree &other){          // Attention!!!! We have new memory to take care of.
-    this->node = other.node;
-    while (!children.empty()){
-        delete (children[0]);
-        children.erase(children.cbegin());
+    if(this != &other){
+        this->node = other.node;
+        copyChildren(other);
     }
-    for (uint i = 0; i < other.children.size(); ++i){
-        this->children.push_back(other.children[i]->clone());
+    cout << "!!!!!!!Copy Assignment Operator!!!!!!!" << endl;
+    return *this;                   //Why endless loop?
+}
+
+//Move Assignment Operator
+Tree& Tree::operator=(Tree &&other) {
+    if(this != &other){
+        this->node = other.node;
+        clear();
+        copyChildren(other);
     }
+    cout << "!!!!!!!Move Assignment Operator!!!!!!!" << endl;
     return *this;
 }
 
+void Tree::clear() {
+    while (!children.empty()){
+        delete (children[0]);
+        //children[0]= nullptr;
+        children.erase(children.cbegin());
+    }
+    cout << "!!!!!!!CLEAR!!!!!!!" << endl;
+}
 
+void Tree::copyChildren(const Tree &other) {
+    for (uint i = 0; i < other.children.size(); ++i){
+        this->children.push_back(other.children[i]->clone());
+    }
+}
 
 void Tree::addChild(const Tree& child){
     //cout << "Children Size 1: " << this->children.size() << endl;
@@ -87,34 +113,25 @@ Tree& Tree::BFS(int RootInd,Session& session){
     Tree* root = createTree(session, RootInd);
     vector<int> visited;
     visited.assign(session.getGraph().getSize(),0);
-    vector<Tree*> TreeQueue;
-    TreeQueue.push_back(root);
-    while (!TreeQueue.empty()){
-        Tree* &curr_Tree = TreeQueue[0];
-        TreeQueue.erase(TreeQueue.cbegin());
+    //vector<Tree*> TreeQueue;
+    queue<Tree*> RealTreeQueue;
+    //TreeQueue.push_back(root);
+    RealTreeQueue.push(root);
+    while (!RealTreeQueue.empty()){
+        Tree* &curr_Tree = RealTreeQueue.front();
+        RealTreeQueue.pop();
+        //TreeQueue.erase(TreeQueue.cbegin());
         if (visited[curr_Tree->node] != 2){
             vector<int> *neighbors = (*curr_Tree).getNeighbors(curr_Tree->node, session);
-
-            cout << "neighbors size: " <<  neighbors->size() << endl;
-
             for (uint i = 0; i < neighbors->size() ; ++i) {
-
                 if(visited[(*neighbors)[i]] == 0){
-
-
-
                     Tree *temp = createTree(session,(*neighbors)[i]);
-                    cout << " Size 1: " << curr_Tree->children.size() << endl;
                     curr_Tree->addChild(*temp);
-                    cout << " Size 2: " << curr_Tree->children.size() << endl;
-                    TreeQueue.push_back(temp);
-                    cout << " Size 3: " << curr_Tree->children.size() << endl;
+                    RealTreeQueue.push(temp);
                     visited[(*neighbors)[i]] = 1;
-
                 }
             }
             visited[curr_Tree->node] = 2;
-
             //delete(neighbors);
         }
     }
