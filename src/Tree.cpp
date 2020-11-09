@@ -18,17 +18,14 @@ Tree::Tree(int rootLabel): node(rootLabel), children(vector<Tree*>()){}
 //Implementation of: Rule of 3
 //Destructor
 Tree::~Tree(){
-  //  for(uint i = 0; i < children.size(); ++i){
-   //     delete(children[i]);
-   // }
    clear();
-    cout << "!!!!!!!Destructor!!!!!!!" << endl;
+//    cout << "!!!!!!!Destructor!!!!!!!" << endl;
 }
 
 //Copy Constructor
 Tree::Tree(const Tree &other):node(other.node), children(){
     copyChildren(other);
-    cout << "!!!!!!!Copy Constructor!!!!!!!" << endl;
+//    cout << "!!!!!!!Copy Constructor!!!!!!!" << endl;
 }
 
 //Move Constractor
@@ -40,7 +37,7 @@ Tree & Tree::operator=(const Tree &other){          // Attention!!!! We have new
         this->node = other.node;
         copyChildren(other);
     }
-    cout << "!!!!!!!Copy Assignment Operator!!!!!!!" << endl;
+//    cout << "!!!!!!!Copy Assignment Operator!!!!!!!" << endl;
     return *this;                   //Why endless loop?
 }
 
@@ -51,17 +48,17 @@ Tree& Tree::operator=(Tree &&other) {
         clear();
         copyChildren(other);
     }
-    cout << "!!!!!!!Move Assignment Operator!!!!!!!" << endl;
+//    cout << "!!!!!!!Move Assignment Operator!!!!!!!" << endl;
     return *this;
 }
 
 void Tree::clear() {
     while (!children.empty()){
         delete (children[0]);
-        //children[0]= nullptr;
+        children[0]= nullptr;
         children.erase(children.cbegin());
     }
-    cout << "!!!!!!!CLEAR!!!!!!!" << endl;
+//    cout << "!!!!!!!CLEAR!!!!!!!" << endl;
 }
 
 void Tree::copyChildren(const Tree &other) {
@@ -71,18 +68,12 @@ void Tree::copyChildren(const Tree &other) {
 }
 
 void Tree::addChild(const Tree& child){
-    //cout << "Children Size 1: " << this->children.size() << endl;
     Tree *newChild = child.clone();     //In clone we declare "new" Tree on the Heap, and Delete the prior (child). This will take place in BFS!
     children.push_back(newChild);
-    //cout << "############" << endl;
-    //for (int i = 0; i < children.size(); ++i) {
-   //     cout << children[i]->node << endl;
-    //}
     this->organize();
-    //cout << "Children Size 2: " << this->children.size() << endl;
 }
 
-Tree* Tree::createTree(const Session& session, int rootLabel) {
+Tree* Tree::createTree(const Session& session, int rootLabel) {     // Here too. A pointer is returned!!!
     TreeType tt = session.getTreeType();
     if (tt == Cycle) {
         CycleTree *CT = new CycleTree(rootLabel, session.getCycle());        //Need to make currCycle field in Session.
@@ -113,14 +104,11 @@ Tree& Tree::BFS(int RootInd,Session& session){
     Tree* root = createTree(session, RootInd);
     vector<int> visited;
     visited.assign(session.getGraph().getSize(),0);
-    //vector<Tree*> TreeQueue;
     queue<Tree*> RealTreeQueue;
-    //TreeQueue.push_back(root);
     RealTreeQueue.push(root);
     while (!RealTreeQueue.empty()){
         Tree* &curr_Tree = RealTreeQueue.front();
         RealTreeQueue.pop();
-        //TreeQueue.erase(TreeQueue.cbegin());
         if (visited[curr_Tree->node] != 2){
             vector<int> *neighbors = (*curr_Tree).getNeighbors(curr_Tree->node, session);
             for (uint i = 0; i < neighbors->size() ; ++i) {
@@ -132,7 +120,6 @@ Tree& Tree::BFS(int RootInd,Session& session){
                 }
             }
             visited[curr_Tree->node] = 2;
-            //delete(neighbors);
         }
     }
     return (*root);
@@ -147,6 +134,12 @@ vector<int>* Tree::getNeighbors(int Node,Session& session){
     }
     return ret;
 }
+
+//This method is made for testing. Delete when done.
+vector<Tree*>& Tree::getChildren(){
+    return this->children;
+}
+
 
 
 
@@ -168,7 +161,7 @@ int RootTree::traceTree(){
     return 0;
 }
 
-RootTree* RootTree::clone() const {
+RootTree* RootTree::clone() const {     //We return a pointer, i.e move on responsibility for the Tree.
     RootTree *RT = new RootTree(*this);
     return RT;
 }
@@ -185,10 +178,14 @@ CycleTree* CycleTree::clone() const {
     return CT;
 }
 
+
+
+
+// remember to delete this method. We don't need this.
+/*
 void Tree::print(Session& session, int rootind){
     Tree *bfs = createTree(session, rootind);
     *bfs = BFS(rootind, session);
-    cout << "print" << endl;
     cout << bfs->node << endl;
     cout << "children size:" << (*bfs).children.size() <<endl;
     for (uint i=0; i<(*bfs).children.size(); ++i){
@@ -196,6 +193,59 @@ void Tree::print(Session& session, int rootind){
     }
     cout << endl;
 }
+*/
+
+
+
+
+
+
+void Tree::NewBFS(int RootInd,Session& session){
+//    Tree* root = createTree(session, RootInd);
+    vector<int> visited;
+    visited.assign(session.getGraph().getSize(),0);
+    queue<Tree*> TreeQueue;
+    TreeQueue.push(this);
+    while (!TreeQueue.empty()){
+        Tree* &currTree = TreeQueue.front();
+        TreeQueue.pop();
+        if (visited[currTree->node] != 2){
+
+//            cout << curr_Tree->node << endl;    // This line shows us that the BFS runs in the right order.
+
+            vector<int> *neighbors = (*currTree).getNeighbors(currTree->node, session);
+            for (uint i = 0; i < neighbors->size() ; ++i) {
+                if(visited[(*neighbors)[i]] == 0){
+                    Tree *temp = createTree(session,(*neighbors)[i]);
+                    currTree->addChild(*temp);
+                    TreeQueue.push(temp);
+                    visited[(*neighbors)[i]] = 1;
+                }
+            }
+            visited[currTree->node] = 2;
+/*
+            cout << "node " << currTree->node << " has " << currTree->children.size() << " children!" << endl;
+            cout << "node " << currTree->node << "'s children are: ";
+            for (uint i=0; i<currTree->children.size(); ++i){
+                cout << currTree->children[i]->node << ", ";
+            }
+*/
+            cout << endl;
+        }
+    }
+}
+
+int Tree::getNode(){return this->node;}
+
+
+
+
+
+
+
+
+
+
 
 
 

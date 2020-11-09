@@ -12,7 +12,7 @@ class Tree{
 public:
     Tree(int rootLabel);
     void addChild(const Tree& child);
-    //Rule of 3:
+    //Rule of 5:
     virtual ~Tree();
     Tree(const Tree &other);
     Tree(Tree && other);
@@ -32,6 +32,9 @@ public:
 
     //This method should be arased.
     void print(Session& session, int rootind);
+    void NewBFS(int RootInd,Session& session);
+    int getNode();
+    vector<Tree*>& getChildren();
 
 private:
     int node;
@@ -66,5 +69,12 @@ public:
 
     virtual RootTree* clone() const;
 };
+
+
+
+
+
+
+
 
 #endif
