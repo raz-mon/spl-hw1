@@ -33,7 +33,7 @@ public:
     //This method should be arased.
     void print(Session& session, int rootind);
     void NewBFS(int RootInd,Session& session);
-    int getNode();
+    int getNode() const;
     vector<Tree*>& getChildren();
 
 private:

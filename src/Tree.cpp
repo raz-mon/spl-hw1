@@ -158,7 +158,7 @@ MaxRankTree* MaxRankTree::clone() const {
 RootTree::RootTree(int rootLabel):Tree(rootLabel){}
 
 int RootTree::traceTree(){
-    return 0;
+    return this->getNode();
 }
 
 RootTree* RootTree::clone() const {     //We return a pointer, i.e move on responsibility for the Tree.
@@ -170,7 +170,13 @@ RootTree* RootTree::clone() const {     //We return a pointer, i.e move on respo
 CycleTree::CycleTree(int rootLabel, int currCycle): Tree(rootLabel), currCycle(currCycle){}
 
 int CycleTree::traceTree(){
-    return 0;
+    int c = this->getNode();
+    Tree & tree = (*this);
+    for (int i = 0; i < this->currCycle; ++i) {     // Question: maybe currCycle -> (currCycle-1).
+        tree = *(tree.getChildren()[0]);
+        c = tree.getNode();
+    }
+    return c;
 }
 
 CycleTree* CycleTree::clone() const {
@@ -232,7 +238,7 @@ void Tree::NewBFS(int RootInd,Session& session){
     }
 }
 
-int Tree::getNode(){return this->node;}
+int Tree::getNode() const{return this->node;}
 
 
 
