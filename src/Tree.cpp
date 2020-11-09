@@ -147,7 +147,19 @@ vector<Tree*>& Tree::getChildren(){
 MaxRankTree::MaxRankTree(int rootLabel): Tree(rootLabel){}
 
 int MaxRankTree::traceTree(){
-    return 0;
+    return MaxRank(*this);
+}
+
+int MaxRankTree::MaxRank(Tree &tree) {
+    int childrenSize = tree.getChildren().size();
+    vector<int> grandChildrenSize;
+    if(childrenSize == 0)
+        return 0;
+    else{
+        for (int i = 0; i < childrenSize; ++i) {
+            grandChildrenSize.push_back(tree.getChildren()[i]->getChildren().size());
+        }
+    }
 }
 
 MaxRankTree* MaxRankTree::clone() const {
@@ -158,7 +170,7 @@ MaxRankTree* MaxRankTree::clone() const {
 RootTree::RootTree(int rootLabel):Tree(rootLabel){}
 
 int RootTree::traceTree(){
-    return 0;
+    return this->getNode();
 }
 
 RootTree* RootTree::clone() const {     //We return a pointer, i.e move on responsibility for the Tree.
@@ -170,7 +182,13 @@ RootTree* RootTree::clone() const {     //We return a pointer, i.e move on respo
 CycleTree::CycleTree(int rootLabel, int currCycle): Tree(rootLabel), currCycle(currCycle){}
 
 int CycleTree::traceTree(){
-    return 0;
+    int c = this->getNode();
+    Tree & tree = (*this);
+    for (int i = 0; i < this->currCycle; ++i) {
+        tree = (*this->getChildren()[0]);
+        c = tree.getNode();
+    }
+    return c;
 }
 
 CycleTree* CycleTree::clone() const {
@@ -235,7 +253,7 @@ void Tree::NewBFS(int RootInd,Session& session){
     }
 }
 
-int Tree::getNode(){return this->node;}
+int Tree::getNode() const{return this->node;}
 
 
 
