@@ -33,7 +33,7 @@ public:
     //This method should be arased.
     void print(Session& session, int rootind);
     void NewBFS(int RootInd,Session& session);
-    int getNode() const;
+    int getNode();
     vector<Tree*>& getChildren();
 
 private:
@@ -60,10 +60,6 @@ public:
     virtual int traceTree();
 
     virtual MaxRankTree* clone() const;
-
-    //Added for traceTree
-private:
-    int MaxRank(Tree& tree);
 };
 
 class RootTree: public Tree{
