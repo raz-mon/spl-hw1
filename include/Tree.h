@@ -15,7 +15,9 @@ public:
     //Rule of 3:
     virtual ~Tree();
     Tree(const Tree &other);
+    Tree(Tree && other);
     Tree & operator=(const Tree &other);
+    Tree & operator=(Tree && other);
 
     static Tree* createTree(const Session& session, int rootLabel);
     virtual int traceTree()=0;
@@ -34,6 +36,9 @@ public:
 private:
     int node;
     std::vector<Tree*> children;
+
+    void clear();
+    void copyChildren(const Tree &other);
 };
 
 class CycleTree: public Tree{
