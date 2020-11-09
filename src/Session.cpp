@@ -85,9 +85,25 @@ Session::~Session(){
 }
 
 void Session::simulate(){
-    Tree* check = Tree::createTree(*this, 0);
-    check->print(*this , 0);
-    /*
+
+    Tree* testTree = Tree::createTree(*this, 0);
+//    cout << "initial size of children: " <<  testTree->getChildren().size() << endl;
+    testTree->NewBFS(testTree->getNode(),*this);
+//    cout << "size of children after BFS: " <<  testTree->getChildren().size() << endl;
+    // printing the children of all nodes in the BFS Tree:
+    for (uint i=0; i<testTree->getChildren().size();++i){
+        cout << "These are the children of node " << testTree->getChildren()[i]->getNode() << ": ";
+        cout << "node " << (testTree->getChildren())[i]->getNode() << " has " << (testTree->getChildren())[i]->getChildren().size() << " children" << endl;
+        for (uint j=0; j<((testTree->getChildren())[i]->getChildren().size()); ++j){
+            cout << testTree->getChildren()[i]->getChildren()[j]->getNode() << ", ";
+            cout << "asdfdsf";
+        }
+        cout << endl;
+    }
+
+
+
+    /*    This is the actual loop that will run.
     while (!g.finish()){
         //Indicating vector size
         int currentSize = agents.size();
