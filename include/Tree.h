@@ -60,10 +60,6 @@ public:
     virtual int traceTree();
 
     virtual MaxRankTree* clone() const;
-
-    //Added for traceTree
-private:
-    int MaxRank(Tree& tree);
 };
 
 class RootTree: public Tree{

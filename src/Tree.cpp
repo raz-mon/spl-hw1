@@ -147,19 +147,7 @@ vector<Tree*>& Tree::getChildren(){
 MaxRankTree::MaxRankTree(int rootLabel): Tree(rootLabel){}
 
 int MaxRankTree::traceTree(){
-    return MaxRank(*this);
-}
-
-int MaxRankTree::MaxRank(Tree &tree) {
-    int childrenSize = tree.getChildren().size();
-    vector<int> grandChildrenSize;
-    if(childrenSize == 0)
-        return 0;
-    else{
-        for (int i = 0; i < childrenSize; ++i) {
-            grandChildrenSize.push_back(tree.getChildren()[i]->getChildren().size());
-        }
-    }
+    return 0;
 }
 
 MaxRankTree* MaxRankTree::clone() const {
@@ -184,8 +172,8 @@ CycleTree::CycleTree(int rootLabel, int currCycle): Tree(rootLabel), currCycle(c
 int CycleTree::traceTree(){
     int c = this->getNode();
     Tree & tree = (*this);
-    for (int i = 0; i < this->currCycle; ++i) {
-        tree = (*this->getChildren()[0]);
+    for (int i = 0; i < this->currCycle; ++i) {     // Question: maybe currCycle -> (currCycle-1).
+        tree = *(tree.getChildren()[0]);
         c = tree.getNode();
     }
     return c;
@@ -219,24 +207,21 @@ void Tree::print(Session& session, int rootind){
 
 
 void Tree::NewBFS(int RootInd,Session& session){
-//    Tree* root = createTree(session, RootInd);
     vector<int> visited;
     visited.assign(session.getGraph().getSize(),0);
     queue<Tree*> TreeQueue;
-    TreeQueue.push(this);
+    Tree &root = *this;
+    TreeQueue.push(&root);
     while (!TreeQueue.empty()){
         Tree* &currTree = TreeQueue.front();
         TreeQueue.pop();
         if (visited[currTree->node] != 2){
-
-//            cout << curr_Tree->node << endl;    // This line shows us that the BFS runs in the right order.
-
             vector<int> *neighbors = (*currTree).getNeighbors(currTree->node, session);
             for (uint i = 0; i < neighbors->size() ; ++i) {
                 if(visited[(*neighbors)[i]] == 0){
                     Tree *temp = createTree(session,(*neighbors)[i]);
                     currTree->addChild(*temp);
-                    TreeQueue.push(temp);
+                    TreeQueue.push(currTree->getChildren()[currTree->getChildren().size()-1]);
                     visited[(*neighbors)[i]] = 1;
                 }
             }
@@ -247,8 +232,8 @@ void Tree::NewBFS(int RootInd,Session& session){
             for (uint i=0; i<currTree->children.size(); ++i){
                 cout << currTree->children[i]->node << ", ";
             }
-*/
             cout << endl;
+*/
         }
     }
 }
