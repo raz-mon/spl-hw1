@@ -30,7 +30,7 @@ public:
 
     int closestNode(int node);
     bool hasEdge(int i, int j);
-
+    void isolate(int toIsolate);
     int getSize();
 private:
     std::vector<std::vector<int>> edges;

@@ -100,31 +100,6 @@ void Tree::organize(){
     }
 }
 
-Tree& Tree::BFS(int RootInd,Session& session){
-    Tree* root = createTree(session, RootInd);
-    vector<int> visited;
-    visited.assign(session.getGraph().getSize(),0);
-    queue<Tree*> RealTreeQueue;
-    RealTreeQueue.push(root);
-    while (!RealTreeQueue.empty()){
-        Tree* &curr_Tree = RealTreeQueue.front();
-        RealTreeQueue.pop();
-        if (visited[curr_Tree->node] != 2){
-            vector<int> *neighbors = (*curr_Tree).getNeighbors(curr_Tree->node, session);
-            for (uint i = 0; i < neighbors->size() ; ++i) {
-                if(visited[(*neighbors)[i]] == 0){
-                    Tree *temp = createTree(session,(*neighbors)[i]);
-                    curr_Tree->addChild(*temp);
-                    RealTreeQueue.push(temp);
-                    visited[(*neighbors)[i]] = 1;
-                }
-            }
-            visited[curr_Tree->node] = 2;
-        }
-    }
-    return (*root);
-}
-
 vector<int>* Tree::getNeighbors(int Node,Session& session){
     Graph& g = session.getGraph();
     vector<int> *ret = new vector<int>();
@@ -184,29 +159,7 @@ CycleTree* CycleTree::clone() const {
     return CT;
 }
 
-
-
-
-// remember to delete this method. We don't need this.
-/*
-void Tree::print(Session& session, int rootind){
-    Tree *bfs = createTree(session, rootind);
-    *bfs = BFS(rootind, session);
-    cout << bfs->node << endl;
-    cout << "children size:" << (*bfs).children.size() <<endl;
-    for (uint i=0; i<(*bfs).children.size(); ++i){
-        cout << (*bfs).children[i]->node << "," ;
-    }
-    cout << endl;
-}
-*/
-
-
-
-
-
-
-void Tree::NewBFS(int RootInd,Session& session){
+void Tree::BFS(Session& session){
     vector<int> visited;
     visited.assign(session.getGraph().getSize(),0);
     queue<Tree*> TreeQueue;
@@ -227,7 +180,6 @@ void Tree::NewBFS(int RootInd,Session& session){
             }
             visited[currTree->node] = 2;
 /*
-            cout << "node " << currTree->node << " has " << currTree->children.size() << " children!" << endl;
             cout << "node " << currTree->node << "'s children are: ";
             for (uint i=0; i<currTree->children.size(); ++i){
                 cout << currTree->children[i]->node << ", ";

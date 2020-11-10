@@ -27,47 +27,19 @@ void Graph::setStatus(int node, Status sts) {
 }
 
 // Build connectivity components and check for solidarity among them.
-bool Graph::finish(){
-
-/*
-    //This part is ONLY for TESTING finish()!
-    vector<vector<int>> temp{{0,0,0,1,1,0},{0,0,0,0,1,0},{0,0,0,0,0,1},{1,0,0,0,0,0},{1,1,0,0,0,0},{0,0,1,0,0,0}};
+bool Graph::finish() {
     bool ans = true;
-    vector<Status> temp2{H,I,C,H,I,C};
-    for(uint i=0;i<temp.size();++i){
-        Status currNodeStatus = temp2[i];
-        for(uint j=0;(j<temp.size()) & (ans);++j){
-            if ((i!=j) & (temp[i][j]==1) & (currNodeStatus!=temp2[j])){
-                ans = false;
-                cout << "nodes " << i << " and " << j << " are of different states!" << endl;
-            }
-        }
-    }
-*/
-
-//          This is the actual function I want to KEEP! The rest are tests.
-    bool ans = true;
-    for(uint i = 0; i < edges.size(); ++i){
+    for (uint i = 0; i < edges.size(); ++i) {
         Status currNodeStatus = nodesStatus[i];
-        for(uint j = 0;(j < edges.size()) & (ans); ++j){
-            if ((i != j) & (edges[i][j] == 1) & (currNodeStatus != nodesStatus[j])){
+        for (uint j = 0; (j < edges.size()) & (ans); ++j) {
+            if ((i != j) & (edges[i][j] == 1) & (currNodeStatus != nodesStatus[j])) {
                 ans = false;
                 cout << "nodes " << i << " and " << j << " are of different states!" << endl;
             }
         }
     }
     return ans;
-
-
-/*    for (uint i=0; i<nodesStatus.size(); ++i){
-        cout << nodesStatus[i] << ", ";
-    }
-    cout << endl;
-*/
 }
-
-//Almog adds-on: new functions
-
 /*
  * closestNode searching for the closest node to be infected by the virus
  */
@@ -101,3 +73,29 @@ int Graph::getSize(){
 bool Graph::hasEdge(int i, int j){
     return edges[i][j]==1;
 }
+
+void Graph::isolate(int toIsolate){
+    for (uint i=0; i<this->edges.size(); ++i){
+        if (edges[toIsolate][i]==1){
+            edges[toIsolate][i]=0;
+            edges[i][toIsolate]=0;
+        }
+    }
+}
+
+
+
+/*
+    //This part is ONLY for TESTING finish()! [I think it wad insine finish method..]
+    vector<vector<int>> temp{{0,0,0,1,1,0},{0,0,0,0,1,0},{0,0,0,0,0,1},{1,0,0,0,0,0},{1,1,0,0,0,0},{0,0,1,0,0,0}};
+    bool ans = true;
+    vector<Status> temp2{H,I,C,H,I,C};
+    for(uint i=0;i<temp.size();++i){
+        Status currNodeStatus = temp2[i];
+        for(uint j=0;(j<temp.size()) & (ans);++j){
+            if ((i!=j) & (temp[i][j]==1) & (currNodeStatus!=temp2[j])){
+                ans = false;
+                cout << "nodes " << i << " and " << j << " are of different states!" << endl;
+            }
+        }
+*/

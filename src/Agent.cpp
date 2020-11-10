@@ -7,7 +7,7 @@
 #include <iostream>
 #include <string>
 #include "../include/Graph.h"
-//#include "../include/Tree.h"
+#include "../include/Tree.h"
 
 using namespace std;
 
@@ -25,7 +25,11 @@ ContactTracer* ContactTracer::clone() const{
 }
 
 void ContactTracer::act(){
-//    int dequeue = session.dequeueInfected();
+    int dequeue = session.dequeueInfected();
+    Tree* root = Tree::createTree(session, dequeue);
+    root->BFS(session);
+    int toIsolate = root->traceTree();
+    session.getGraph().isolate(toIsolate);
 }
 
 

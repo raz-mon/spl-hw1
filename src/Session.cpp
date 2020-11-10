@@ -87,20 +87,7 @@ Session::~Session(){
 void Session::simulate(){
 
     Tree* testTree = Tree::createTree(*this, 0);
-//    cout << "initial size of children: " <<  testTree->getChildren().size() << endl;
-    testTree->NewBFS(testTree->getNode(),*this);
-//    cout << "size of children after BFS: " <<  testTree->getChildren().size() << endl;
-    // printing the children of all nodes in the BFS Tree:
-    for (uint i=0; i<testTree->getChildren().size();++i){
-        cout << "These are the children of node " << testTree->getChildren()[i]->getNode() << ": ";
-        cout << "node " << (testTree->getChildren())[i]->getNode() << " has " << (testTree->getChildren())[i]->getChildren().size() << " children" << endl;
-        for (uint j=0; j<((testTree->getChildren())[i]->getChildren().size()); ++j){
-            cout << testTree->getChildren()[i]->getChildren()[j]->getNode() << ", ";
-            cout << "asdfdsf";
-        }
-        cout << endl;
-    }
-
+    testTree->BFS(*this);
 
 
     /*    This is the actual loop that will run.
@@ -119,8 +106,8 @@ TreeType Session::getTreeType() const{
     return this->treeType;
 }
 
-//Almog - adds-on: new functions
-Graph& Session::getGraph(){
+
+Graph& Session::getGraph(){// QUESTION!!!! do we need to do this stupid proccess of making a reference and returning it? The func returns a reference by definition.
     Graph& temp = g;
     return temp;
 }

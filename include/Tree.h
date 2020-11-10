@@ -25,14 +25,13 @@ public:
     //from here, our implementation:
     virtual Tree* clone() const=0;
     void organize();
-    Tree& BFS(int RootInd,Session& session);
 
     vector<int>* getNeighbors(int Node,Session& session);
 
 
     //This method should be arased.
     void print(Session& session, int rootind);
-    void NewBFS(int RootInd,Session& session);
+    void BFS(Session& session);
     int getNode() const;
     vector<Tree*>& getChildren();
 
