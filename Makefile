@@ -6,7 +6,7 @@ all: CoronaVirus
 CoronaVirus:  clean bin/main.o bin/Session.o bin/Graph.o bin/Agent.o bin/Tree.o
 	@echo 'Building target: cTree'
 	@echo 'Invoking: C++ Linker'
-	g++ -o bin/test  bin/main.o bin/Session.o bin/Graph.o bin/Agent.o bin/Tree.o
+	g++ -o bin/cTrace  bin/main.o bin/Session.o bin/Graph.o bin/Agent.o bin/Tree.o
 	@echo 'Finished building target: cTree'
 	@echo ' '
 

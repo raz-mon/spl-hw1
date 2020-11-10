@@ -48,6 +48,7 @@ Session::Session(const std::string& path):g(),treeType(),agents(),InfectedQueue(
         if(j["agents"][m][0] == "V"){
             Virus *v = new Virus(j["agents"][m][1], *this);
             agents.push_back(v);
+            g.setStatus(j["agents"][m][1], C);
         }
         else {
             ContactTracer *ct = new ContactTracer(*this);
@@ -133,7 +134,18 @@ int Session::getCycle() const{
 void Session::outputConfig(){
     json j;
     ofstream o("./output.json");
-    j["testing"] {{5, 4, 2}, {2, 1, 53}, {8, 5, 6}};
+    j["graph"];
+    j["infected"];
+    for (int i=0; i<g.getSize(); ++i){
+        j["graph"][i] = g.getEdges()[i];
+    }
+    vector<int> infectedGuys;
+    for(uint i=0; i<g.getNodesStatus().size(); ++i){
+        if (g.getNodesStatus()[i]!=H){
+            infectedGuys.push_back(i);
+        }
+    }
+    j["infected"] = infectedGuys;
     o << j << endl;
 }
 

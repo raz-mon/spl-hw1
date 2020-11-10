@@ -32,6 +32,8 @@ public:
     bool hasEdge(int i, int j);
     void isolate(int toIsolate);
     int getSize();
+    vector<vector<int>> getEdges() const;
+    vector<Status> getNodesStatus() const;
 private:
     std::vector<std::vector<int>> edges;
     // We inserted:
