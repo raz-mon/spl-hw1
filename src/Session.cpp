@@ -86,7 +86,7 @@ Session::~Session(){
 }
 //lllllll
 //move assignment operator:
-this is a test
+
 
 void Session::simulate(){
     while (!g.finish()){
