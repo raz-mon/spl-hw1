@@ -122,7 +122,30 @@ vector<Tree*>& Tree::getChildren(){
 MaxRankTree::MaxRankTree(int rootLabel): Tree(rootLabel){}
 
 int MaxRankTree::traceTree(){
-    return 0;
+    return MaxRank();
+}
+
+int MaxRankTree::MaxRank() {
+    queue<Tree*> Queue;
+    Queue.push(this);
+    int index = Queue.front()->getNode();
+    int childrenSize = Queue.front()->getChildren().size();
+    int curr_index;
+    int curr_children;
+    while (!Queue.empty()){
+        Tree* & curr = Queue.front();
+        Queue.pop();
+        curr_index = curr->getNode();
+        curr_children = curr->getChildren().size();
+        if (curr_children > childrenSize){
+            index = curr_index;
+            childrenSize = curr_children;
+        }
+        for (uint i = 0; i < curr_children ; ++i) {
+            Queue.push(curr->getChildren()[i]);
+        }
+    }
+    return index;
 }
 
 MaxRankTree* MaxRankTree::clone() const {

@@ -85,21 +85,13 @@ Session::~Session(){
 }
 
 void Session::simulate(){
-
-    Tree* testTree = Tree::createTree(*this, 0);
-    testTree->BFS(*this);
-
-
-    /*    This is the actual loop that will run.
     while (!g.finish()){
-        //Indicating vector size
         int currentSize = agents.size();
-        for(int i = 0; i < currentSize; i++){
+        for(int i = 0; i < currentSize; i++){       // run only through agents that where created prior to this cycle.
             agents[i]->act();
         }
         ++cycle;
     }
-     */
 }
 
 TreeType Session::getTreeType() const{
@@ -137,6 +129,17 @@ void Session::addAgent(const Agent& agent){
 int Session::getCycle() const{
     return this->cycle;
 }
+
+void Session::outputConfig(){
+    json j;
+    ofstream o("./output.json");
+    j["testing"] {{5, 4, 2}, {2, 1, 53}, {8, 5, 6}};
+    o << j << endl;
+}
+
+
+
+
 
 
 
