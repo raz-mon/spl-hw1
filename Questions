@@ -14,7 +14,20 @@
    Answer: Yes. It is indeed the same.
 7. Why does the "AddAgent" method recieve a const? This seems not smart given that we need to clone ot in order to insert it into the "agents" vector.
 8. Is our implementation to "getNieghbors" good? meaning our intention to get a reference of the created vector in it.
-9. If a function returns a REFERENCE, can I return the regular object? Or do I have to make a reference myself and return it also?? [Second option seems silly].
+
+
+New set of questions (more relevant):
+1. If a function returns a REFERENCE, can I return the regular object? Or do I have to make a reference myself and return it also?? [Second option seems silly].
+2. Help with arranging git-hub with CLion.
+3. What happens when we exit the loop that initializes agents? Destructor whise. What happends to the pointers v that we made?
+4. Why does the move assignment operator return a reference? (same for copy assignment operator).
+5. 
+
+
+
+
+
+
 
 
 
