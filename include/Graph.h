@@ -15,8 +15,6 @@ enum Status{
 class Graph{
 public:
     Graph(std::vector<std::vector<int>> matrix);
-
-    //Not originally in files
     Graph();
 
     void infectNode(int nodeInd);
