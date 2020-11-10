@@ -40,6 +40,7 @@ public:
     //Almog adds-on: new functions
     Graph& getGraph();
     int getCycle() const;
+    void outputConfig();
 
 
 private:
