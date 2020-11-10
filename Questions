@@ -1,14 +1,20 @@
-1. Do we need to wrute a loop of simulate() (i.e run simulate over and over untill
+1. Do we need to write a loop of simulate() (i.e run simulate over and over untill
    termination condition is satisfied), or run a loop inside simulate (as we did)?
    
 2. addAgent method: how do we add an const agent refferance into agents without 
    creating a new agent instead.
+   Answer: clone().
 3. What does dolav mean in the Tree description by saying: "Tree – This class used to represent a shortest path tree in the graph, from some starting node"?
+   Answer: Seems that he means a regular tree, starting from the wanted node..
 4. In finish() method, do I need to make sure there are no "carrying" verices? i.e all are Healthy or Infected.
+   Answer: Obviously.
 5. We have three options (enum) for the nodes status's. Is this o.k? Should we have only 2? (Meaning will the tests be o.k with this).
+   Answer: Yes.
 6. Isn't the BFS algorithm the same for every tree? It depends only on starting node, no?
+   Answer: Yes. It is indeed the same.
 7. Why does the "AddAgent" method recieve a const? This seems not smart given that we need to clone ot in order to insert it into the "agents" vector.
 8. Is our implementation to "getNieghbors" good? meaning our intention to get a reference of the created vector in it.
+9. If a function returns a REFERENCE, can I return the regular object? Or do I have to make a reference myself and return it also?? [Second option seems silly].
 
 
 
@@ -33,5 +39,4 @@ Notes from dolav's office hours:
    13. Isn't the BFS algorithm the same for every tree? It depends only on starting node, no?
    14. Minute 1:22 - dolav shows Session copy constructor. And then "clone" for Agent! Great.
    15. We can make a "addChild" func that overrides dolav's methood that sends a poibter (not a reference). In this case we still need to implement his I think.
-   16. 
       
