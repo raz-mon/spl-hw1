@@ -141,7 +141,7 @@ int MaxRankTree::MaxRank() {
             index = curr_index;
             childrenSize = curr_children;
         }
-        for (uint i = 0; i < curr_children ; ++i) {
+        for (int i = 0; i < curr_children ; ++i) {
             Queue.push(curr->getChildren()[i]);
         }
     }

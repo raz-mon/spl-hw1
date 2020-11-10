@@ -34,7 +34,7 @@ bool Graph::finish() {
         for (uint j = 0; (j < edges.size()) & (ans); ++j) {
             if ((i != j) & (edges[i][j] == 1) & (currNodeStatus != nodesStatus[j])) {
                 ans = false;
-                cout << "nodes " << i << " and " << j << " are of different states!" << endl;
+ //               cout << "nodes " << i << " and " << j << " are of different states!" << endl;
             }
         }
     }
@@ -81,6 +81,14 @@ void Graph::isolate(int toIsolate){
             edges[i][toIsolate]=0;
         }
     }
+}
+
+vector<vector<int>> Graph::getEdges() const{
+    return this->edges;
+}
+
+vector<Status> Graph::getNodesStatus() const{
+    return nodesStatus;
 }
 
 
