@@ -84,6 +84,9 @@ Session::~Session(){
         delete(agents[i]);
     }
 }
+//kkkk
+//move assignment operator:
+kkk
 
 void Session::simulate(){
     while (!g.finish()){
