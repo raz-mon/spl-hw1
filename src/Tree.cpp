@@ -19,17 +19,20 @@ Tree::Tree(int rootLabel): node(rootLabel), children(vector<Tree*>()){}
 //Destructor
 Tree::~Tree(){
    clear();
-//    cout << "!!!!!!!Destructor!!!!!!!" << endl;
 }
 
 //Copy Constructor
 Tree::Tree(const Tree &other):node(other.node), children(){
     copyChildren(other);
-//    cout << "!!!!!!!Copy Constructor!!!!!!!" << endl;
 }
 
 //Move Constractor
-Tree::Tree(Tree &&other):node(other.node), children(other.children) {}
+Tree::Tree(Tree &&other):node(other.node), children(){
+    for (uint i=0; i<other.children.size(); ++i){
+        this->children[i] = other.children[i];
+        other.children[i] = nullptr;
+    }
+}
 
 //Copy Assignment Operator
 Tree & Tree::operator=(const Tree &other){          // Attention!!!! We have new memory to take care of.
@@ -37,8 +40,7 @@ Tree & Tree::operator=(const Tree &other){          // Attention!!!! We have new
         this->node = other.node;
         copyChildren(other);
     }
-//    cout << "!!!!!!!Copy Assignment Operator!!!!!!!" << endl;
-    return *this;                   //Why endless loop?
+    return *this;
 }
 
 //Move Assignment Operator
@@ -46,9 +48,11 @@ Tree& Tree::operator=(Tree &&other) {
     if(this != &other){
         this->node = other.node;
         clear();
-        copyChildren(other);
+        for (uint i=0; i<other.children.size(); ++i){
+            this->children[i] = other.children[i];
+            other.children[i] = nullptr;
+        }
     }
-//    cout << "!!!!!!!Move Assignment Operator!!!!!!!" << endl;
     return *this;
 }
 
@@ -58,7 +62,6 @@ void Tree::clear() {
         children[0]= nullptr;
         children.erase(children.cbegin());
     }
-//    cout << "!!!!!!!CLEAR!!!!!!!" << endl;
 }
 
 void Tree::copyChildren(const Tree &other) {
