@@ -32,6 +32,8 @@ void ContactTracer::act(){
     root->BFS(session);
     int toIsolate = root->traceTree();
     session.getGraph().isolate(toIsolate);
+    delete(root);
+    root = nullptr;
 }
 
 
@@ -56,6 +58,8 @@ void Virus::act(){
         Virus *v = new Virus(spreaded, session);
         g.setStatus(spreaded, C);
         session.addAgent(*v);
+        delete(v);
+        v = nullptr;
     }
 
 }
