@@ -31,7 +31,6 @@ void ContactTracer::act(){
     Tree* root = Tree::createTree(session, dequeue);
     root->BFS(session);
     int toIsolate = root->traceTree();
-    cout << "Node to be isolate: " << toIsolate << endl;
     session.getGraph().isolate(toIsolate);
 }
 
