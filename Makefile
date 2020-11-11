@@ -33,5 +33,3 @@ bin/Tree.o: src/Tree.cpp
 #Clean the build directory
 clean:
 	rm -f bin/*
-
-# Testing

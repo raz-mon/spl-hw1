@@ -94,11 +94,12 @@ Session& Session::operator=(Session&& other){
         agents.push_back(other.agents[i]);
         other.agents[i] = nullptr;
     }
+    return *this;
 }
 
 //move CTR
 Session::Session(Session&& other): g(other.g),treeType(other.treeType),      //beware of memory leaks due to the vector copy here!!
-                                   InfectedQueue(other.InfectedQueue),cycle(other.cycle),agents(other.agents){
+                                   agents(other.agents), InfectedQueue(other.InfectedQueue),cycle(other.cycle){
     for(uint i=0; i<other.agents.size();++i){
         other.agents[i] = nullptr;
     }
@@ -130,9 +131,6 @@ Graph& Session::getGraph(){// QUESTION!!!! do we need to do this stupid proccess
     return temp;
 }
 
-/*
- * enqueueInfected
- */
 void Session::enqueueInfected(int node){
     this->InfectedQueue.push_back(node);
 }

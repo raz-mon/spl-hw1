@@ -58,7 +58,7 @@ Tree& Tree::operator=(Tree &&other) {
 
 void Tree::clear() {
     while (!children.empty()){
-        delete (children[0]);
+        delete(children[0]);
         children[0]= nullptr;
         children.erase(children.cbegin());
     }
@@ -204,16 +204,12 @@ void Tree::BFS(Session& session){
                     currTree->addChild(*temp);
                     TreeQueue.push(currTree->getChildren()[currTree->getChildren().size()-1]);
                     visited[(*neighbors)[i]] = 1;
+                    delete(temp);
+                    temp = nullptr;
                 }
             }
             visited[currTree->node] = 2;
-/*
-            cout << "node " << currTree->node << "'s children are: ";
-            for (uint i=0; i<currTree->children.size(); ++i){
-                cout << currTree->children[i]->node << ", ";
-            }
-            cout << endl;
-*/
+            delete(neighbors);
         }
     }
 }
