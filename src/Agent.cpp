@@ -26,7 +26,7 @@ ContactTracer* ContactTracer::clone() const{
 
 void ContactTracer::act(){
     int dequeue = session.dequeueInfected();
-    if(dequeue==-1)
+    if(dequeue == -1)
         return;
     Tree* root = Tree::createTree(session, dequeue);
     root->BFS(session);

@@ -56,6 +56,7 @@ Session::Session(const std::string& path):g(),treeType(),agents(),InfectedQueue(
         }
     }
 }
+
 //copy constructor
 Session::Session(const Session &otherSess): g(otherSess.g),
         treeType(otherSess.treeType), agents(), InfectedQueue(otherSess.InfectedQueue),cycle(0){
@@ -63,6 +64,7 @@ Session::Session(const Session &otherSess): g(otherSess.g),
         this->agents.push_back(otherSess.agents[i]->clone());           // Atention!!!! We have new memory to take care of.
     }
 }
+
 // copy assignment operator
 Session & Session::operator=(const Session &otherSess){          // Atention!!!! We have new memory to take care of.
     this->g = otherSess.g;
@@ -74,15 +76,9 @@ Session & Session::operator=(const Session &otherSess){          // Atention!!!!
         agents.erase(agents.begin());
     }
     for (uint i=0; i<otherSess.agents.size(); ++i){
-        this->agents.push_back(otherSess.agents[i]->clone());
+        this->agents.push_back(otherSess.agents[i]->clone());       //Why does it say endless loop?
     }
     return *this;
-}
-
-Session::~Session(){
-    for (uint i=0; i<agents.size(); ++i){
-        delete(agents[i]);
-    }
 }
 
 //move assignment operator:
@@ -102,9 +98,15 @@ Session& Session::operator=(Session&& other){
 
 //move CTR
 Session::Session(Session&& other): g(other.g),treeType(other.treeType),      //beware of memory leaks due to the vector copy here!!
-                    InfectedQueue(other.InfectedQueue),cycle(other.cycle),agents(other.agents){
+                                   InfectedQueue(other.InfectedQueue),cycle(other.cycle),agents(other.agents){
     for(uint i=0; i<other.agents.size();++i){
         other.agents[i] = nullptr;
+    }
+}
+
+Session::~Session(){
+    for (uint i=0; i<agents.size(); ++i){
+        delete(agents[i]);
     }
 }
 

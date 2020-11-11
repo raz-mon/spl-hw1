@@ -44,7 +44,7 @@ bool Graph::finish() {
  * closestNode searching for the closest node to be infected by the virus
  */
 int Graph::closestNode(int node){
-    for(uint i = node + 1; i < nodesStatus.size(); i++){
+    for(uint i = 0; i < nodesStatus.size(); ++i){
         if(edges[node][i] == 1){
             if(nodesStatus[i] == H)
                 return (int)i;

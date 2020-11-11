@@ -40,7 +40,7 @@ Tree & Tree::operator=(const Tree &other){          // Attention!!!! We have new
         this->node = other.node;
         copyChildren(other);
     }
-    return *this;
+    return *this;                   //Why endless loop?
 }
 
 //Move Assignment Operator
@@ -172,10 +172,12 @@ CycleTree::CycleTree(int rootLabel, int currCycle): Tree(rootLabel), currCycle(c
 
 int CycleTree::traceTree(){
     int c = this->getNode();
-    Tree & tree = (*this);
+    Tree *tree = this;          //Do we need to delete tree?
     for (int i = 0; i < this->currCycle; ++i) {     // Question: maybe currCycle -> (currCycle-1).
-        tree = *(tree.getChildren()[0]);
-        c = tree.getNode();
+        if(tree->getChildren().size() != 0) {
+            tree = (tree->getChildren()[0]);
+            c = tree->getNode();
+        }
     }
     return c;
 }

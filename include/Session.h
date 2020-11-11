@@ -30,8 +30,8 @@ public:
     virtual ~Session();
     Session(const Session &otherSess);
     Session & operator=(const Session &otherSess);
-    Session& Session::operator=(Session&& other)
-    Session(Session&& other)
+    Session& operator=(Session&& other);
+    Session(Session&& other);
 
 
     void enqueueInfected(int);
@@ -43,7 +43,6 @@ public:
     Graph& getGraph();
     int getCycle() const;
     void outputConfig();
-
 
 private:
     Graph g;

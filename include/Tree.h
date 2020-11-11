@@ -31,6 +31,7 @@ public:
 
     //This method should be arased.
     void print(Session& session, int rootind);
+
     void BFS(Session& session);
     int getNode() const;
     vector<Tree*>& getChildren();
