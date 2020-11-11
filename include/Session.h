@@ -26,10 +26,12 @@ public:
     void addAgent(const Agent& agent);
     void setGraph(const Graph& graph);
     //Trace function for ContactTracer - act()
-    //Rule of 3:
+    //Rule of 5:
     virtual ~Session();
     Session(const Session &otherSess);
     Session & operator=(const Session &otherSess);
+    Session& Session::operator=(Session&& other)
+    Session(Session&& other)
 
 
     void enqueueInfected(int);
