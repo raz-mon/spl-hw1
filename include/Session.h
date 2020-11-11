@@ -26,12 +26,10 @@ public:
     void addAgent(const Agent& agent);
     void setGraph(const Graph& graph);
     //Trace function for ContactTracer - act()
-    //Rule of 5:
+    //Rule of 3:
     virtual ~Session();
     Session(const Session &otherSess);
     Session & operator=(const Session &otherSess);
-    Session& Session::operator=(Session&& other)
-    Session(Session&& other)
 
 
     void enqueueInfected(int);
@@ -43,7 +41,7 @@ public:
     Graph& getGraph();
     int getCycle() const;
     void outputConfig();
-
+    void Test1();   //Test for MaxRankTree - trace tree
 
 private:
     Graph g;
