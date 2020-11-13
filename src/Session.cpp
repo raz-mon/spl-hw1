@@ -9,14 +9,13 @@
 #include "../include/Agent.h"
 #include <string>
 #include <vector>
-#include "../include/Tree.h"    //We need to delete this
 
 using json = nlohmann::json;
 using namespace std;
 
-Session::Session():g(),treeType(Root), agents(),InfectedQueue(),cycle(){}
+Session::Session():g(),treeType(Root), agents(),InfectedQueue(),cycle(){}       // Empty CTR
 
-Session::Session(const std::string& path):g(),treeType(),agents(),InfectedQueue(),cycle(0){
+Session::Session(const std::string& path):g(),treeType(),agents(),InfectedQueue(),cycle(0){     // Regular CTR
     ifstream i(path);
     json j;
     i >> j;
@@ -104,7 +103,7 @@ Session::Session(Session&& other): g(other.g),treeType(other.treeType),      //b
         other.agents[i] = nullptr;
     }
 }
-
+// Destructor
 Session::~Session(){
     for (uint i=0; i<agents.size(); ++i){
         delete(agents[i]);
@@ -115,7 +114,7 @@ void Session::simulate(){
     while (!g.finish()){
         int currentSize = agents.size();
         for(int i = 0; i < currentSize; i++){       // run only through agents that where created prior to this cycle.
-            agents[i]->act();
+            agents[i]->act();                       // relevant agent acts.
         }
         ++cycle;
     }
@@ -126,13 +125,12 @@ TreeType Session::getTreeType() const{
 }
 
 
-Graph& Session::getGraph(){// QUESTION!!!! do we need to do this stupid proccess of making a reference and returning it? The func returns a reference by definition.
-    Graph& temp = g;
-    return temp;
+Graph& Session::getGraph(){
+    return g;
 }
 
 void Session::enqueueInfected(int node){
-    this->InfectedQueue.push_back(node);
+    this->InfectedQueue.push_back(node);        // Push node to the infectedQueue vector (That acts as a queue).
 }
 
 int Session::dequeueInfected(){
@@ -143,9 +141,6 @@ int Session::dequeueInfected(){
     return infectedNode;
 }
 
-/*
- * addAgent             //We need to check this shit
- */
 void Session::addAgent(const Agent& agent){
     agents.push_back(agent.clone());
 }
@@ -157,13 +152,13 @@ int Session::getCycle() const{
 void Session::outputConfig(){
     json j;
     ofstream o("./output.json");
-    j["graph"];
-    j["infected"];
+    j["graph"];                         // Create object graph, which will hold the final graph.
+    j["infected"];                      //Create object infected, which will hold all infected nodes.
     for (int i=0; i<g.getSize(); ++i){
         j["graph"][i] = g.getEdges()[i];
     }
     vector<int> infectedGuys;
-    for(uint i=0; i<g.getNodesStatus().size(); ++i){
+    for(uint i=0; i<g.getNodesStatus().size(); ++i){        // fill infected (vector) with infected nodes.
         if (g.getNodesStatus()[i]!=H){
             infectedGuys.push_back(i);
         }

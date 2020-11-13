@@ -25,7 +25,6 @@ public:
     void simulate();
     void addAgent(const Agent& agent);
     void setGraph(const Graph& graph);
-    //Trace function for ContactTracer - act()
     //Rule of 5:
     virtual ~Session();
     Session(const Session &otherSess);
@@ -33,13 +32,10 @@ public:
     Session& operator=(Session&& other);
     Session(Session&& other);
 
-
     void enqueueInfected(int);
     int dequeueInfected();
     TreeType getTreeType() const;
 
-
-    //Almog adds-on: new functions
     Graph& getGraph();
     int getCycle() const;
     void outputConfig();
