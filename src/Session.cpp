@@ -19,7 +19,7 @@ Session::Session(const std::string& path):g(),treeType(),agents(),InfectedQueue(
     ifstream i(path);
     json j;
     i >> j;
-    //Initializing treeType
+    //Initializing treeType according to given treeType in json file
     if (j["tree"] == "M"){
         this->treeType  = MaxRank;
     }
@@ -31,16 +31,7 @@ Session::Session(const std::string& path):g(),treeType(),agents(),InfectedQueue(
     }
 
     //Initializing Graph
-    vector<vector<int>> a;
-    for(uint k = 0; k < j["graph"].size(); ++k){
-        vector<int> temp;
-        for(uint l = 0; l<j["graph"][k].size(); ++l){
-            temp.push_back(j["graph"][k][l]);
-        }
-        a.push_back(temp);
-    }
-
-    g = Graph(a);
+    g = Graph(j["graph"]);
 
     //Initializing Agents
     for(uint m=0; m<j["agents"].size(); ++m){
@@ -60,34 +51,39 @@ Session::Session(const std::string& path):g(),treeType(),agents(),InfectedQueue(
 Session::Session(const Session &otherSess): g(otherSess.g),
         treeType(otherSess.treeType), agents(), InfectedQueue(otherSess.InfectedQueue),cycle(0){
     for (uint i=0; i<agents.size(); ++i){
-        this->agents.push_back(otherSess.agents[i]->clone());           // Atention!!!! We have new memory to take care of.
+        this->agents.push_back(otherSess.agents[i]->clone());
     }
 }
 
 // copy assignment operator
-Session & Session::operator=(const Session &otherSess){          // Atention!!!! We have new memory to take care of.
+Session & Session::operator=(const Session &otherSess){
+    if (this == &otherSess)
+        return *this;
     this->g = otherSess.g;
     this->treeType = otherSess.treeType;
     this->InfectedQueue = otherSess.InfectedQueue;
     this->cycle = otherSess.cycle;
-    while (agents.size()!=0){
+    while (!agents.empty()){       // delete allocated memory by this's agents.
         delete(agents[0]);
         agents.erase(agents.begin());
     }
-    for (uint i=0; i<otherSess.agents.size(); ++i){
-        this->agents.push_back(otherSess.agents[i]->clone());       //Why does it say endless loop?
+    for (uint i=0; i<otherSess.agents.size(); ++i){     // assign otherSess's agents to this's agents (but as new instances!).
+        this->agents.push_back(otherSess.agents[i]->clone());
     }
     return *this;
 }
 
 //move assignment operator:
 Session& Session::operator=(Session&& other){
+    if (this == &other)
+        return *this;
     this->g = other.g;
     this->cycle = other.cycle;
     this->InfectedQueue = other.InfectedQueue;
     this->treeType = other.treeType;
-    for (uint i=0; i<this->agents.size();++i){      //free all memory alocated by this.
-        delete(this->agents[i]);
+    while (!this->agents.empty()){      //free all memory alocated by this, and empty this->agents before assignment.
+        delete(this->agents[0]);
+        agents.erase(agents.begin());
     }
     for (uint i=0; i<other.agents.size();++i){      //"steal" other's memory and move it's pointers to null.
         agents.push_back(other.agents[i]);
@@ -103,6 +99,7 @@ Session::Session(Session&& other): g(other.g),treeType(other.treeType),      //b
         other.agents[i] = nullptr;
     }
 }
+
 // Destructor
 Session::~Session(){
     for (uint i=0; i<agents.size(); ++i){

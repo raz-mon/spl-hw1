@@ -16,8 +16,6 @@ Graph::Graph(std::vector<std::vector<int>> matrix): edges(matrix), nodesStatus()
     }
 }
 
-// From here on, we built.
-
 Status Graph::getStatus(int node){
     return nodesStatus[node];
 }

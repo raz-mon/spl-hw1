@@ -15,7 +15,7 @@ int main(int argc, char** argv){
         return 0;
     }
     Session sess(argv[1]);
-    sess.simulate();
-    sess.outputConfig();
+    sess.simulate();                        // starts simulation.
+    sess.outputConfig();                    // arrange output json-file.
     return 0;
 }
