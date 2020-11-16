@@ -4,18 +4,14 @@
 
 #include "../include/Tree.h"
 #include <string>
-#include "../include/Agent.h"
-#include "../include/Graph.h"
 #include <vector>
-#include <iostream>
-#include "../include/Session.h"
 #include <queue>
 
 using namespace std;
 
 Tree::Tree(int rootLabel): node(rootLabel), children(vector<Tree*>()){}
 
-//Implementation of: Rule of 3
+//Implementation of: Rule of 5
 //Destructor
 Tree::~Tree(){
    clear();
@@ -27,31 +23,31 @@ Tree::Tree(const Tree &other):node(other.node), children(){
 }
 
 //Move Constractor
-Tree::Tree(Tree &&other):node(other.node), children(){
-    for (uint i=0; i<other.children.size(); ++i){
-        this->children[i] = other.children[i];
+Tree::Tree(Tree &&other):node(other.node), children(other.children){
+    for (uint i=0; i<other.children.size(); ++i){       // after "shallow copy", send other's pointers to null.
         other.children[i] = nullptr;
     }
 }
 
 //Copy Assignment Operator
-Tree & Tree::operator=(const Tree &other){          // Attention!!!! We have new memory to take care of.
+Tree & Tree::operator=(const Tree &other){
     if(this != &other){
+        clear();                // delete memory allocated by this->children.
         this->node = other.node;
-        copyChildren(other);
+        copyChildren(other);    // copy other's children.
     }
-    return *this;                   //Why endless loop?
+    return *this;
 }
 
 //Move Assignment Operator
 Tree& Tree::operator=(Tree &&other) {
-    if(this != &other){
-        this->node = other.node;
-        clear();
-        for (uint i=0; i<other.children.size(); ++i){
-            this->children[i] = other.children[i];
-            other.children[i] = nullptr;
-        }
+    if (this == &other)
+        return *this;
+    clear();            // delete allocated memory by this.children.
+    this->node = other.node;
+    for (uint i=0; i<other.children.size(); ++i){       // assigns other.children to this.children, and others children pointers to nullptr.
+        this->children.push_back(other.children[i]);    // Make sure this is o.k!!! push_back take a const reference!! What happends when i take other to nullptr???
+        other.children[i] = nullptr;
     }
     return *this;
 }
@@ -59,9 +55,9 @@ Tree& Tree::operator=(Tree &&other) {
 void Tree::clear() {
     while (!children.empty()){
         delete(children[0]);
-        children[0]= nullptr;
         children.erase(children.cbegin());
     }
+    node = -1;          // so we know this Tree is cleared.
 }
 
 void Tree::copyChildren(const Tree &other) {
