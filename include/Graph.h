@@ -9,7 +9,7 @@ using namespace std;
 enum Status{
     H,          //Healthy
     C,          //Carrying
-    I           //Infected.             *Check wheather "infected" means sick, or carrying.
+    I           //Infected
 };
 
 class Graph{
@@ -22,7 +22,6 @@ public:
 
     // We inserted:
     bool finish();
-
     Status getStatus(int node);
     void setStatus(int node, Status sts);
 
