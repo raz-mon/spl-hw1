@@ -46,7 +46,7 @@ Tree& Tree::operator=(Tree &&other) {
     clear();            // delete allocated memory by this.children.
     this->node = other.node;
     for (uint i=0; i<other.children.size(); ++i){       // assigns other.children to this.children, and others children pointers to nullptr.
-        this->children.push_back(other.children[i]);    // Make sure this is o.k!!! push_back take a const reference!! What happends when i take other to nullptr???
+        this->children.push_back(other.children[i]);
         other.children[i] = nullptr;
     }
     return *this;
@@ -92,15 +92,15 @@ void Tree::organize(){
     }
     int i = children.size() - 2;
     while((children[i]->node) > (children[i+1]->node)){
-        Tree *Temp = children[i]->clone();          // Beware of memory leaks!
+        Tree *temp = children[i];
         children[i] = children[i+1];
-        children[i+1] = Temp;
+        children[i+1] = temp;
         --i;
     }
 }
 
 vector<int>* Tree::getNeighbors(int Node,Session& session){
-    Graph& g = session.getGraph();
+    Graph g = session.getGraph();
     vector<int> *ret = new vector<int>();
     for (int i = 0; i < g.getSize(); ++i){
         if(g.hasEdge(Node,i))
@@ -109,14 +109,9 @@ vector<int>* Tree::getNeighbors(int Node,Session& session){
     return ret;
 }
 
-//This method is made for testing. Delete when done.
 vector<Tree*>& Tree::getChildren(){
     return this->children;
 }
-
-
-
-
 
 MaxRankTree::MaxRankTree(int rootLabel): Tree(rootLabel){}
 
@@ -158,18 +153,17 @@ int RootTree::traceTree(){
     return this->getNode();
 }
 
-RootTree* RootTree::clone() const {     //We return a pointer, i.e move on responsibility for the Tree.
+RootTree* RootTree::clone() const {     //We return a pointer, meaning we move on responsibility for the Tree.
     RootTree *RT = new RootTree(*this);
     return RT;
 }
-
 
 CycleTree::CycleTree(int rootLabel, int currCycle): Tree(rootLabel), currCycle(currCycle){}
 
 int CycleTree::traceTree(){
     int c = this->getNode();
-    Tree *tree = this;          //Do we need to delete tree?
-    for (int i = 0; i < this->currCycle; ++i) {     // Question: maybe currCycle -> (currCycle-1).
+    Tree *tree = this;
+    for (int i = 0; i < this->currCycle; ++i) {
         if(tree->getChildren().size() != 0) {
             tree = (tree->getChildren()[0]);
             c = tree->getNode();
@@ -201,7 +195,6 @@ void Tree::BFS(Session& session){
                     TreeQueue.push(currTree->getChildren()[currTree->getChildren().size()-1]);
                     visited[(*neighbors)[i]] = 1;
                     delete(temp);
-                    temp = nullptr;
                 }
             }
             visited[currTree->node] = 2;

@@ -32,15 +32,13 @@ bool Graph::finish() {
         for (uint j = 0; (j < edges.size()) & (ans); ++j) {
             if ((i != j) & (edges[i][j] == 1) & (currNodeStatus != nodesStatus[j])) {
                 ans = false;
- //               cout << "nodes " << i << " and " << j << " are of different states!" << endl;
             }
         }
     }
     return ans;
 }
-/*
- * closestNode searching for the closest node to be infected by the virus
- */
+
+// closestNode searching for the closest node to be infected by the virus.
 int Graph::closestNode(int node){
     for(uint i = 0; i < nodesStatus.size(); ++i){
         if(edges[node][i] == 1){
@@ -50,11 +48,6 @@ int Graph::closestNode(int node){
     }
     return -1;
 }
-
-/*
- * infectNode and isInfected
- */
-
 
 void Graph::infectNode(int nodeInd){
     this->nodesStatus[nodeInd] = I;
@@ -88,20 +81,3 @@ vector<vector<int>> Graph::getEdges() const{
 vector<Status> Graph::getNodesStatus() const{
     return nodesStatus;
 }
-
-
-
-/*
-    //This part is ONLY for TESTING finish()! [I think it wad insine finish method..]
-    vector<vector<int>> temp{{0,0,0,1,1,0},{0,0,0,0,1,0},{0,0,0,0,0,1},{1,0,0,0,0,0},{1,1,0,0,0,0},{0,0,1,0,0,0}};
-    bool ans = true;
-    vector<Status> temp2{H,I,C,H,I,C};
-    for(uint i=0;i<temp.size();++i){
-        Status currNodeStatus = temp2[i];
-        for(uint j=0;(j<temp.size()) & (ans);++j){
-            if ((i!=j) & (temp[i][j]==1) & (currNodeStatus!=temp2[j])){
-                ans = false;
-                cout << "nodes " << i << " and " << j << " are of different states!" << endl;
-            }
-        }
-*/
