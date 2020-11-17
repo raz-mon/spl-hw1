@@ -1,7 +1,3 @@
-//
-// Created by spl211 on 03/11/2020.
-//
-
 #include "../include/Agent.h"
 #include <string>
 #include "../include/Tree.h"
@@ -27,13 +23,7 @@ void ContactTracer::act(){
     int toIsolate = root->traceTree();      // Put in toisolate the node that we want to isolate.
     session.getGraph().isolate(toIsolate);      // Isolate the relevant node.
     delete(root);                           // Free alocated memory by root (no need for him any more).
-    root = nullptr;                         // So we won't reffer to an address that has garbage inside it.
 }
-
-
-
-
-
 
 Virus::Virus(int nodeInd, Session& session):Agent(session), nodeInd(nodeInd){}
 

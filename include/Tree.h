@@ -22,7 +22,6 @@ public:
     static Tree* createTree(const Session& session, int rootLabel);
     virtual int traceTree()=0;
 
-    //from here, our implementation:
     virtual Tree* clone() const=0;
     void organize();
     vector<int>* getNeighbors(int Node,Session& session);
@@ -55,7 +54,7 @@ public:
 
     virtual MaxRankTree* clone() const;
 private:
-    int MaxRank();      //A private method we added only for traceTree method
+    int MaxRank();
 };
 
 class RootTree: public Tree{

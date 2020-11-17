@@ -1,10 +1,5 @@
-//
-// Created by spl211 on 03/11/2020.
-//
-
 #include "../include/Graph.h"
 #include <string>
-#include <iostream>
 
 using namespace std;
 

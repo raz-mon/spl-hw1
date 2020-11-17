@@ -20,7 +20,6 @@ public:
     void infectNode(int nodeInd);
     bool isInfected(int nodeInd);
 
-    // We inserted:
     bool finish();
     Status getStatus(int node);
     void setStatus(int node, Status sts);
@@ -33,7 +32,6 @@ public:
     vector<Status> getNodesStatus() const;
 private:
     std::vector<std::vector<int>> edges;
-    // We inserted:
     vector<Status> nodesStatus;
 };
 

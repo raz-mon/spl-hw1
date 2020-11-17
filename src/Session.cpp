@@ -1,7 +1,3 @@
-//
-// Created by spl211 on 03/11/2020.
-//
-
 #include "../include/Session.h"
 #include "../include/json.hpp"
 #include <fstream>

@@ -18,10 +18,7 @@ enum TreeType{
 class Session{
 public:
     Session(const std::string& path);
-
-    //not in original
     Session();
-
     void simulate();
     void addAgent(const Agent& agent);
     void setGraph(const Graph& graph);

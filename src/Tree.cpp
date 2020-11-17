@@ -1,7 +1,3 @@
-//
-// Created by spl211 on 03/11/2020.
-//
-
 #include "../include/Tree.h"
 #include <string>
 #include <vector>
@@ -11,7 +7,7 @@ using namespace std;
 
 Tree::Tree(int rootLabel): node(rootLabel), children(vector<Tree*>()){}
 
-//Implementation of: Rule of 5
+//Implementation of Rule of 5
 //Destructor
 Tree::~Tree(){
    clear();
