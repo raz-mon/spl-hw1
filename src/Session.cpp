@@ -160,6 +160,10 @@ void Session::outputConfig(){
     o << j << endl;
 }
 
+void Session::setGraph(const Graph &graph) {
+    this->g = graph;
+}
+
 
 
 
