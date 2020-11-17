@@ -15,11 +15,12 @@ Graph::Graph(std::vector<std::vector<int>> matrix): edges(matrix), nodesStatus()
         nodesStatus.push_back(H);
     }
 }
-
+//Check if node is Healthy/Carrying/Infected
 Status Graph::getStatus(int node){
     return nodesStatus[node];
 }
 
+//Set node as Healthy/Carrying/Infected
 void Graph::setStatus(int node, Status sts) {
     this->nodesStatus[node] = sts;
 }
@@ -27,10 +28,10 @@ void Graph::setStatus(int node, Status sts) {
 // Build connectivity components and check for solidarity among them.
 bool Graph::finish() {
     bool ans = true;
-    for (uint i = 0; i < edges.size(); ++i) {
-        Status currNodeStatus = nodesStatus[i];
+    for (uint i = 0; i < edges.size(); ++i) {       //Node to be checked with other nodes
+        Status currNodeStatus = nodesStatus[i];     //Mark node's status for equalization later
         for (uint j = 0; (j < edges.size()) & (ans); ++j) {
-            if ((i != j) & (edges[i][j] == 1) & (currNodeStatus != nodesStatus[j])) {
+            if ((i != j) & (edges[i][j] == 1) & (currNodeStatus != nodesStatus[j])) {       //Check if nodes have an edge and with same status
                 ans = false;
             }
         }
@@ -42,7 +43,7 @@ bool Graph::finish() {
 int Graph::closestNode(int node){
     for(uint i = 0; i < nodesStatus.size(); ++i){
         if(edges[node][i] == 1){
-            if(nodesStatus[i] == H)
+            if(nodesStatus[i] == H)     //if node is healthy
                 return (int)i;
         }
     }
@@ -65,6 +66,7 @@ bool Graph::hasEdge(int i, int j){
     return edges[i][j]==1;
 }
 
+//Delete node's edges
 void Graph::isolate(int toIsolate){
     for (uint i=0; i<this->edges.size(); ++i){
         if (edges[toIsolate][i]==1){

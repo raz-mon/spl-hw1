@@ -25,13 +25,7 @@ public:
     //from here, our implementation:
     virtual Tree* clone() const=0;
     void organize();
-
     vector<int>* getNeighbors(int Node,Session& session);
-
-
-    //This method should be arased.
-    void print(Session& session, int rootind);
-
     void BFS(Session& session);
     int getNode() const;
     vector<Tree*>& getChildren();
@@ -46,7 +40,7 @@ private:
 
 class CycleTree: public Tree{
 public:
-    CycleTree(int rootLabel, int currCycle);            // currCycle: probably a field we will need to maintain.
+    CycleTree(int rootLabel, int currCycle);
     virtual int traceTree();
 
     virtual CycleTree* clone() const;
@@ -61,7 +55,7 @@ public:
 
     virtual MaxRankTree* clone() const;
 private:
-    int MaxRank();
+    int MaxRank();      //A private method we added only for traceTree method
 };
 
 class RootTree: public Tree{
@@ -71,12 +65,5 @@ public:
 
     virtual RootTree* clone() const;
 };
-
-
-
-
-
-
-
 
 #endif
