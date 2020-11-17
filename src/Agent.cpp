@@ -24,7 +24,7 @@ void ContactTracer::act(){
         return;
     Tree* root = Tree::createTree(session, dequeue);
     root->BFS(session);     // Create the relevant BFS tree, where root is its root.
-    int toIsolate = root->traceTree();      // Put in toisolate the ndoe that we want to isolate.
+    int toIsolate = root->traceTree();      // Put in toisolate the node that we want to isolate.
     session.getGraph().isolate(toIsolate);      // Isolate the relevant node.
     delete(root);                           // Free alocated memory by root (no need for him any more).
     root = nullptr;                         // So we won't reffer to an address that has garbage inside it.
@@ -53,7 +53,6 @@ void Virus::act(){
         g.setStatus(spreaded, C);           // Set the node status to 'carrying'.
         session.addAgent(*v);                   // Create a new agent with the new virus, and add it to agents (vector).
         delete(v);                          // Free alocated memory by v.
-        v = nullptr;
     }
 
 }
