@@ -97,7 +97,7 @@ Session::Session(Session&& other): g(other.g),treeType(other.treeType),      //b
 }
 
 // Destructor
-Session::~Session(){
+[[noreturn]] Session::~Session(){
     for (uint i=0; i<agents.size(); ++i){
         delete(agents[i]);
     }
